@@ -8,6 +8,7 @@ SRC_C += macros.c
 SRC_C += stm8_interrupt_vector.c
 SRC_C += stm8s_it.c
 SRC_C += stm8s_clk.c
+SRC_C += stm8s_tim4.c
 
 #----------------------------------------------------------
 

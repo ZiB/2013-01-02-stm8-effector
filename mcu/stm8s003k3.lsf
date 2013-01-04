@@ -34,6 +34,7 @@ target/main.o
 target/macros.o
 target/stm8s_it.o
 target/stm8s_clk.o
+target/stm8s_tim4.o
 
 # библиотеки
 libis0.sm8
