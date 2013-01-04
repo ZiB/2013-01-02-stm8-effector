@@ -34,6 +34,13 @@ void main(void)
 	TIM4_ITConfig(TIM4_IT_UPDATE, ENABLE);
 	TIM4_Cmd(ENABLE);
 
+	// таймер для ВАМ модулятора
+	TIM2_DeInit();
+	TIM2_TimeBaseInit(TIM2_PRESCALER_128, 1024 - 1);
+	TIM2_ClearFlag(TIM2_FLAG_UPDATE);
+	TIM2_ITConfig(TIM2_IT_UPDATE, ENABLE);
+	TIM2_Cmd(ENABLE);
+
 	// разрешаем прерывания
 	enableInterrupts();
 
