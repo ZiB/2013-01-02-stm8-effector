@@ -12,6 +12,7 @@
 #include "macros.h"
 #include "program.h"
 #include "task_manager.h"
+#include "soft_bam.h"
 
 #include "mcu_gpio.h"
 
