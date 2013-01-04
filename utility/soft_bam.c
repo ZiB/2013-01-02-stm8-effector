@@ -16,7 +16,7 @@ static volatile uint8_t bam_mask = 64;
 	channel_bright = program.channel_bright[channel_number++];\
 	if(channel_bright-- != 0) \
 	{ \
-		if ((bam_mask & channel_bright) && (channel_bright < program.pwm_max)) \
+		if ((bam_mask & channel_bright) && (channel_bright <= program.pwm_max)) \
 		{ PIN_ON(PIN_BAM_##pwm_channel_number); } \
 		else \
 		{ PIN_OFF(PIN_BAM_##pwm_channel_number); } \
