@@ -55,6 +55,9 @@ void main(void)
 	TIM2_ITConfig(TIM2_IT_UPDATE, ENABLE);
 	TIM2_Cmd(ENABLE);
 
+	// инициализация программы эффектов
+	program_init();
+
 	// разрешаем прерывания
 	enableInterrupts();
 

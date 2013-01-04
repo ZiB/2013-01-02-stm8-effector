@@ -186,6 +186,8 @@ INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler)
 {
 	delay_ms_refresh();
 
+	task_manager_refresh();
+
 	TIM4->SR1 = (uint8_t) (~TIM4_IT_UPDATE);
 }
 #endif /*STM8S903*/

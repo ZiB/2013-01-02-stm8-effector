@@ -5,6 +5,8 @@
 
 SRC_C  = main.c
 SRC_C += macros.c
+SRC_C += program.c
+SRC_C += task_manager.c
 SRC_C += stm8_interrupt_vector.c
 SRC_C += stm8s_it.c
 SRC_C += stm8s_clk.c

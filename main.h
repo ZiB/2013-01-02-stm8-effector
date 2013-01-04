@@ -10,6 +10,8 @@
 #include "stm8s.h"
 
 #include "macros.h"
+#include "program.h"
+#include "task_manager.h"
 
 #include "mcu_gpio.h"
 
