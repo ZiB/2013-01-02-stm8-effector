@@ -13,6 +13,7 @@
 #include "program.h"
 #include "task_manager.h"
 #include "soft_bam.h"
+#include "monitor.h"
 
 #include "mcu_gpio.h"
 #include "mcu_uart1_fifo.h"

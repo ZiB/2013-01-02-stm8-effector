@@ -35,6 +35,7 @@ target/macros.o
 target/program.o
 target/task_manager.o
 target/soft_bam.o
+target/monitor.o
 target/mcu_uart1_fifo.o
 target/stm8s_it.o
 target/stm8s_clk.o

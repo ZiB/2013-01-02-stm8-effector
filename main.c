@@ -9,8 +9,6 @@
 //------------------------------------------------------------------------------
 void main(void)
 {
-	uint8_t rx_data;
-
 	// запрет прерываний
 	disableInterrupts();
 
@@ -73,9 +71,6 @@ void main(void)
 	// основной цикл
 	while (1)
 	{
-		if (!(mcu_uart1_fifo_receive(&rx_data) & UART_FIFO_NO_DATA))
-		{
-			mcu_uart1_fifo_transmit(rx_data);
-		}
+		monitor_refresh();
 	}
 }
