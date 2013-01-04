@@ -35,10 +35,12 @@ target/macros.o
 target/program.o
 target/task_manager.o
 target/soft_bam.o
+target/mcu_uart1_fifo.o
 target/stm8s_it.o
 target/stm8s_clk.o
 target/stm8s_tim2.o
 target/stm8s_tim4.o
+target/stm8s_uart1.o
 
 # библиотеки
 libis0.sm8

@@ -8,11 +8,13 @@ SRC_C += macros.c
 SRC_C += program.c
 SRC_C += task_manager.c
 SRC_C += soft_bam.c
+SRC_C += mcu_uart1_fifo.c
 SRC_C += stm8_interrupt_vector.c
 SRC_C += stm8s_it.c
 SRC_C += stm8s_clk.c
 SRC_C += stm8s_tim2.c
 SRC_C += stm8s_tim4.c
+SRC_C += stm8s_uart1.c
 
 #----------------------------------------------------------
 

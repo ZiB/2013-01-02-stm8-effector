@@ -133,10 +133,12 @@ INTERRUPT_HANDLER(TIM3_CAP_COM_IRQHandler)
     defined(STM8S003) ||  defined (STM8AF62Ax) || defined (STM8AF52Ax) || defined (STM8S903)
 INTERRUPT_HANDLER(UART1_TX_IRQHandler)
 {
+	mcu_uart1_fifo_tx_handler();
 }
 
 INTERRUPT_HANDLER(UART1_RX_IRQHandler)
 {
+	mcu_uart1_fifo_rx_handler();
 }
 #endif /*STM8S208 or STM8S207 or STM8S103 or STM8S903 or STM8AF62Ax or STM8AF52Ax */
 

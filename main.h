@@ -15,6 +15,7 @@
 #include "soft_bam.h"
 
 #include "mcu_gpio.h"
+#include "mcu_uart1_fifo.h"
 
 #define PIN_LED_GREEN	D, 0, LOW, OUTPUT_PUSH_PULL_SPEED_LIMIT_10MHZ
 
@@ -30,5 +31,8 @@
 #define PIN_BAM_9		C, 3,  LOW, OUTPUT_PUSH_PULL_SPEED_LIMIT_10MHZ
 #define PIN_BAM_10		C, 5,  LOW, OUTPUT_PUSH_PULL_SPEED_LIMIT_10MHZ
 #define PIN_BAM_11		C, 7,  LOW, OUTPUT_PUSH_PULL_SPEED_LIMIT_10MHZ
+
+#define PIN_UART_RX		D, 6, HIGH, INPUT_PULL_UP_WITHOUT_ITERRUPT
+#define PIN_UART_TX		D, 5, HIGH, OUTPUT_PUSH_PULL_NOSPEED_LIMIT
 
 #endif /* MAIN_H_ */

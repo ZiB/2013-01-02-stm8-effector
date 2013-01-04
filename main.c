@@ -9,6 +9,8 @@
 //------------------------------------------------------------------------------
 void main(void)
 {
+	uint8_t rx_data;
+
 	// запрет прерываний
 	disableInterrupts();
 
@@ -37,6 +39,10 @@ void main(void)
 	PIN_CONFIGURATION(PIN_BAM_10);
 	PIN_CONFIGURATION(PIN_BAM_11);
 
+	// линии UART
+	PIN_CONFIGURATION(PIN_UART_RX);
+	PIN_CONFIGURATION(PIN_UART_TX);
+
 	// после сброса микроконтроллер работает от встроенного HSI-генератора
 	// с делителем по умолчанию 8, меняем его на 2, т.е. частота будет равна 16/2 = 8 МГц
 	CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV2);
@@ -55,6 +61,9 @@ void main(void)
 	TIM2_ITConfig(TIM2_IT_UPDATE, ENABLE);
 	TIM2_Cmd(ENABLE);
 
+	// инициализация UART
+	mcu_uart1_fifo_init(9600);
+
 	// инициализация программы эффектов
 	program_init();
 
@@ -64,10 +73,9 @@ void main(void)
 	// основной цикл
 	while (1)
 	{
-		PIN_ON(PIN_LED_GREEN);
-		delay_ms(500);
-
-		PIN_OFF(PIN_LED_GREEN);
-		delay_ms(500);
+		if (!(mcu_uart1_fifo_receive(&rx_data) & UART_FIFO_NO_DATA))
+		{
+			mcu_uart1_fifo_transmit(rx_data);
+		}
 	}
 }
