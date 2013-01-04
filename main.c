@@ -23,6 +23,20 @@ void main(void)
 	// тестовый светодиод
 	PIN_CONFIGURATION(PIN_LED_GREEN);
 
+	// выходы ВАМ модулятора
+	PIN_CONFIGURATION(PIN_BAM_0);
+	PIN_CONFIGURATION(PIN_BAM_1);
+	PIN_CONFIGURATION(PIN_BAM_2);
+	PIN_CONFIGURATION(PIN_BAM_3);
+	PIN_CONFIGURATION(PIN_BAM_4);
+	PIN_CONFIGURATION(PIN_BAM_5);
+	PIN_CONFIGURATION(PIN_BAM_6);
+	PIN_CONFIGURATION(PIN_BAM_7);
+	PIN_CONFIGURATION(PIN_BAM_8);
+	PIN_CONFIGURATION(PIN_BAM_9);
+	PIN_CONFIGURATION(PIN_BAM_10);
+	PIN_CONFIGURATION(PIN_BAM_11);
+
 	// после сброса микроконтроллер работает от встроенного HSI-генератора
 	// с делителем по умолчанию 8, меняем его на 2, т.е. частота будет равна 16/2 = 8 МГц
 	CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV2);
