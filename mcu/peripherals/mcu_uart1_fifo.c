@@ -27,8 +27,7 @@ void mcu_uart1_fifo_init(uint32_t baud_rate)
 
 	UART1_DeInit();
 
-	UART1_Init(baud_rate, UART1_WORDLENGTH_8D, UART1_STOPBITS_1,
-			UART1_PARITY_NO, UART1_SYNCMODE_CLOCK_DISABLE,
+	UART1_Init(baud_rate, UART1_WORDLENGTH_8D, UART1_STOPBITS_1, UART1_PARITY_NO, UART1_SYNCMODE_CLOCK_DISABLE,
 			UART1_MODE_TXRX_ENABLE);
 
 	UART1_ITConfig(UART1_IT_RXNE, ENABLE);
@@ -47,8 +46,7 @@ uint8_t mcu_uart1_fifo_receive(uint8_t * data)
 	if (rx_head == uart_fifo.rx_buffer_tail)
 		return UART_FIFO_NO_DATA;
 
-	rx_tail = (uint8_t) ((uart_fifo.rx_buffer_tail + 1)
-			& (uint8_t) (UART_RX_BUFFER_SIZE - 1));
+	rx_tail = (uint8_t) ((uart_fifo.rx_buffer_tail + 1) & (uint8_t) (UART_RX_BUFFER_SIZE - 1));
 
 	uart_fifo.rx_buffer_tail = rx_tail;
 
@@ -62,8 +60,7 @@ void mcu_uart1_fifo_transmit(uint8_t data)
 {
 	uint8_t tx_head;
 
-	tx_head = (uint8_t) ((uart_fifo.tx_buffer_head + 1)
-			& (uint8_t) (UART_TX_BUFFER_SIZE - 1));
+	tx_head = (uint8_t) ((uart_fifo.tx_buffer_head + 1) & (uint8_t) (UART_TX_BUFFER_SIZE - 1));
 
 	while (tx_head == uart_fifo.tx_buffer_tail)
 	{
@@ -129,8 +126,7 @@ void mcu_uart1_fifo_rx_handler(void)
 	if (status & UART1_SR_NF)
 		rx_last_error |= UART_FIFO_ERROR_NOISE;
 
-	rx_head = (uint8_t) ((uart_fifo.rx_buffer_head + 1)
-			& (uint8_t) (UART_RX_BUFFER_SIZE - 1));
+	rx_head = (uint8_t) ((uart_fifo.rx_buffer_head + 1) & (uint8_t) (UART_RX_BUFFER_SIZE - 1));
 
 	if (rx_head == uart_fifo.rx_buffer_tail)
 	{
