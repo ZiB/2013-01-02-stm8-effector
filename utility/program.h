@@ -7,6 +7,9 @@
 #ifndef PROGRAM_H_
 #define PROGRAM_H_
 
+#define PROGRAM_EEPROM_NUMBER	4
+#define PROGRAM_FLASH_NUMBER	4
+
 #define PROGRAM_STORE_SIZE (12 + 12 + 7)
 
 union program_type
@@ -49,7 +52,7 @@ union program_type
 
 extern union program_type program;
 
-void program_init(void);
+void program_switch(uint8_t program_number);
 void do_work(void);
 void do_jump(void);
 void do_strobo(void);

@@ -63,7 +63,7 @@ void main(void)
 	mcu_uart1_fifo_init(9600);
 
 	// инициализация программы эффектов
-	program_init();
+	program_switch(PROGRAM_EEPROM_NUMBER);
 
 	// разрешаем прерывания
 	enableInterrupts();

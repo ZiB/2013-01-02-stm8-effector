@@ -8,17 +8,22 @@
 
 volatile union program_type program;
 
-const uint8_t flash_program[][PROGRAM_STORE_SIZE] = { /*волна*/{ 0, 0, 1, 4, 16, 64, 128, 128, 64, 16, 4, 1, 255, 255,
-		255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 3, 0, 0 }, /*семафор*/{ 1, 1, 1, 1, 1, 1, 32, 32, 32, 32, 32,
-		32, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 16, 10, 0, 1, 0 }, /*рябь*/{ 0, 0, 1, 4, 16, 64, 128, 128, 64,
-		16, 4, 1, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 3, 8, 0, 0, 0, 1, 0 }, /*мерцание*/{ 0,
-		2, 8, 16, 32, 64, 64, 32, 16, 8, 2, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 2, 0, 0, 0,
-		0, 1, 2 }, /*падающая звезда*/{ 0, 0, 1, 1, 2, 2, 4, 8, 16, 32, 64, 128, 255, 255, 255, 255, 255, 255, 255,
-		255, 255, 255, 255, 255, 4, 0, 16, 0, 0, 1, 0 }, /*бугущие огни*/{ 0, 0, 0, 0, 128, 128, 0, 0, 0, 0, 128, 128,
-		255, 255, 255, 255, 1, 1, 255, 255, 255, 255, 1, 1, 3, 0, 0, 10, 3, 0, 0 }, /*переливание*/{ 0, 0, 128, 128, 0,
-		0, 128, 128, 0, 0, 128, 128, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 2, 8, 0, 0, 0, 0, 0 }, /*бегущие огни*/
-{ 128, 0, 0, 128, 0, 0, 128, 0, 0, 128, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 0, 0, 0,
-		3, 0, 0 } };
+const uint8_t flash_program[PROGRAM_FLASH_NUMBER][PROGRAM_STORE_SIZE] = { /*падающая звезда*/{ 0, 0, 1, 1, 2, 2, 4, 8,
+		16, 32, 64, 128, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 4, 0, 16, 0, 0, 1, 0 }, /*бугущие огни*/
+		{ 0, 0, 0, 0, 128, 128, 0, 0, 0, 0, 128, 128, 255, 255, 255, 255, 1, 1, 255, 255, 255, 255, 1, 1, 3, 0, 0, 10,
+				3, 0, 0 }, /*переливание*/
+		{ 0, 0, 128, 128, 0, 0, 128, 128, 0, 0, 128, 128, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 2, 8, 0, 0,
+				0, 0, 0 }, /*бегущие огни*/
+		{ 128, 0, 0, 128, 0, 0, 128, 0, 0, 128, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 0,
+				0, 0, 3, 0, 0 } };
+
+EEPROM uint8_t eeprom_program[PROGRAM_EEPROM_NUMBER][PROGRAM_STORE_SIZE] = { /*волна*/{ 0, 0, 1, 4, 16, 64, 128, 128,
+		64, 16, 4, 1, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 3, 0, 0 }, /*семафор*/{ 1, 1, 1, 1,
+		1, 1, 32, 32, 32, 32, 32, 32, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 16, 10, 0, 1, 0 }, /*рябь*/{ 0, 0, 1,
+		4, 16, 64, 128, 128, 64, 16, 4, 1, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 3, 8, 0, 0, 0,
+		1, 0 }, /*мерцание*/
+{ 0, 2, 8, 16, 32, 64, 64, 32, 16, 8, 2, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 2, 0, 0, 0, 0,
+		1, 2 } };
 
 volatile uint8_t slide_current;
 volatile uint8_t slide_target;
@@ -247,19 +252,45 @@ void do_strobo_blinc(void)
 }
 
 //------------------------------------------------------------------------------
-void program_init(void)
+void program_switch(uint8_t program_number)
 {
 	uint8_t byte_number;
+	uint8_t *program_data;
 
-	for (byte_number = 0; byte_number < PROGRAM_STORE_SIZE; byte_number++)
+	// сброс
+	for (byte_number = 0; byte_number < ARRAY_LENGHT(program.raw); byte_number++)
 	{
-		program.raw[byte_number] = flash_program[0][byte_number];
+		program.raw[byte_number] = 0;
 	}
 
+	slide_current = 128;
+	slide_target = 0;
+	slide_restore = 0;
+	pwm_target = 0;
+
+	// базовые настройки
 	program.period_strobo_blink = 6;
 	program.period_slide_target = 20;
 	program.period_switch = 50;
 	program.pwm_max = 128;
 
-	slide_current = 128;
+	// определение области программы
+	if (program_number < PROGRAM_EEPROM_NUMBER)
+	{
+		program_data = &eeprom_program[program_number][0];
+	}
+	else if (program_number < (PROGRAM_EEPROM_NUMBER + PROGRAM_FLASH_NUMBER))
+	{
+		program_data = &flash_program[program_number - PROGRAM_EEPROM_NUMBER][0];
+	}
+	else
+	{
+		program_data = &eeprom_program[0][0];
+	}
+
+	// копирование программы
+	for (byte_number = 0; byte_number < PROGRAM_STORE_SIZE; byte_number++)
+	{
+		program.raw[byte_number] = program_data[byte_number];
+	}
 }
