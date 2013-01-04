@@ -8,6 +8,17 @@
 
 static volatile uint16_t delay_count;
 static volatile _Bool delay_flag;
+static volatile uint16_t random;
+
+//------------------------------------------------------------------------------
+uint8_t get_random_byte(void)
+{
+	random *= 5;
+	random += 1;
+	random %= 256;
+
+	return (uint8_t) random;
+}
 
 //------------------------------------------------------------------------------
 void delay_ms(volatile uint16_t delay)

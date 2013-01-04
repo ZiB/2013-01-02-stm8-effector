@@ -32,5 +32,6 @@
 
 void delay_ms_refresh(void);
 void delay_ms(volatile uint16_t delay);
+uint8_t get_random_byte(void);
 
 #endif /* MACROS_H_ */
