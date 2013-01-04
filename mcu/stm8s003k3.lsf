@@ -33,6 +33,7 @@ crtsi0.sm8
 target/main.o
 target/macros.o
 target/stm8s_it.o
+target/stm8s_clk.o
 
 # библиотеки
 libis0.sm8

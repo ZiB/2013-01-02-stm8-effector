@@ -23,7 +23,9 @@ void main(void)
 	// тестовый светодиод
 	PIN_CONFIGURATION(PIN_LED_GREEN);
 
-	PIN_ON(PIN_LED_GREEN);
+	// после сброса микроконтроллер работает от встроенного HSI-генератора
+	// с делителем по умолчанию 8, меняем его на 2, т.е. частота будет равна 16/2 = 8 МГц
+	CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV2);
 
 	// основной цикл
 	while (1)
