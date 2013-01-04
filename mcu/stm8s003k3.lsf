@@ -42,6 +42,7 @@ target/stm8s_clk.o
 target/stm8s_tim2.o
 target/stm8s_tim4.o
 target/stm8s_uart1.o
+target/stm8s_flash.o
 
 # библиотеки
 libis0.sm8

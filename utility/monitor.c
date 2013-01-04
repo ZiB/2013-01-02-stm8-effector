@@ -25,6 +25,30 @@ void monitor_refresh(void)
 			if (rx_key == 0)
 				return;
 
+			// работа с памятью
+			if (rx_key == 'Z')
+			{
+				switch (rx_data)
+				{
+					case ('0'): // записать текущую программу в EEPROM
+					{
+						program_current_save_to_eeprom();
+						break;
+					}
+					case ('1'): // восстановить все программы в EEPROM
+					{
+						program_eeprom_restore_all();
+
+						break;
+					}
+					case ('2'): // прочитать текущую программу
+					{
+						program_send_to(mcu_uart1_fifo_transmit);
+						break;
+					}
+				}
+			}
+
 			// яркость каналов
 			if (rx_key < 'M')
 			{
@@ -65,6 +89,33 @@ void monitor_refresh(void)
 			}
 			else
 			{
+				// переключение программ
+				if (rx_key == 'P')
+				{
+					rx_data -= '0';
+					if (rx_data < PROGRAM_FLASH_NUMBER + 2)
+					{
+						if (rx_data < 6)
+						{
+							program_switch(rx_data);
+						}
+						else if (rx_data == 7)
+						{
+							program_switch(PROGRAM_EEPROM_NUMBER);
+							program.period_flash_next = 200;
+						}
+						else if (rx_data == 6)
+						{
+							program_switch(0);
+							program.period_eeprom_next = 200;
+						}
+						else
+						{
+							program_switch((uint8_t) (rx_data - 2));
+						}
+					}
+				}
+
 				// эффекты
 				switch (rx_key)
 				{

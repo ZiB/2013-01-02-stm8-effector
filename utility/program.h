@@ -7,14 +7,15 @@
 #ifndef PROGRAM_H_
 #define PROGRAM_H_
 
-#define PROGRAM_EEPROM_NUMBER	4
-#define PROGRAM_FLASH_NUMBER	4
-
-#define PROGRAM_STORE_SIZE (12 + 12 + 7)
+enum
+{
+	PROGRAM_EEPROM_NUMBER = 4, PROGRAM_FLASH_NUMBER = (PROGRAM_EEPROM_NUMBER + 4),
+	PROGRAM_STORE_SIZE = (12 + 12 + 7)
+};
 
 union program_type
 {
-	volatile uint8_t raw[PROGRAM_STORE_SIZE + 16];
+	volatile uint8_t raw[PROGRAM_STORE_SIZE + 20];
 	struct
 	{
 		// сохраняемая часть
@@ -47,12 +48,17 @@ union program_type
 		volatile uint8_t slide;
 		volatile uint8_t pwm_max;
 		volatile uint8_t strobo_out;
+		volatile uint8_t number;
 	};
 };
 
 extern union program_type program;
 
+void program_init(void);
+void program_send_to(void(* send)(uint8_t data));
 void program_switch(uint8_t program_number);
+void program_eeprom_restore_all(void);
+void program_current_save_to_eeprom(void);
 void do_work(void);
 void do_jump(void);
 void do_strobo(void);
