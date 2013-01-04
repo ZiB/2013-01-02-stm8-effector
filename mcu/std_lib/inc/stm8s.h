@@ -2630,7 +2630,7 @@ CFG_TypeDef;
 /*============================== Interrupt vector Handling ========================*/
 
 #ifdef _COSMIC_
- #define INTERRUPT_HANDLER(a,b) @far @interrupt void a(void)
+ #define INTERRUPT_HANDLER(a) @far @interrupt void a(void)
  #define INTERRUPT_HANDLER_TRAP(a) void @far @interrupt a(void)
 #endif /* _COSMIC_ */
 
